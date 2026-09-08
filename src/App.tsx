@@ -1,11 +1,14 @@
-
+import { CommentProvider } from "./contexts/CommentProvider";
 
 function App() {
-
-  return (
-    <>
-    </>
-  )
+    
+    return (
+        <>
+            <CommentProvider>
+                
+            </CommentProvider>
+        </>
+    );
 }
 
-export default App
+export default App;
