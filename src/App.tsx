@@ -4,7 +4,7 @@ import { CommentProvider } from "./contexts/CommentProvider";
 function App() {
     
     return (
-        <main className="flex min-h-screen items-center bg-[#f5f6fa] py-[58px]">
+        <main className="flex min-h-screen items-center py-14.5">
             <CommentProvider>
                 <CommentList/>
             </CommentProvider>

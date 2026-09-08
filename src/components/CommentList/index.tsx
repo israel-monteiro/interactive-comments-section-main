@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
+import { CommentCard } from "../CommentCard";
 
 export const CommentList = () => {
     const { comments } = useContext(CommentContext);
