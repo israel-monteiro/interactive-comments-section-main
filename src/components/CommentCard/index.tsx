@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
 import type { Comment } from "../../interfaces/comment";
 import { CommentReply } from "../CommentReply";
 import { VoteComment } from "../VoteComment";
 import { CommentActions } from "../CommentActions";
+import { CommentContent } from "../CommentContent";
 
 interface CommentCardProps {
     comment: Comment;
@@ -11,6 +12,7 @@ interface CommentCardProps {
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
     const { currentUser } = useContext(CommentContext);
+    const [isEditing, setIsEditing] = useState(false);
 
     const isCurrentUser = comment.user.username === currentUser.username;
     return (
@@ -27,14 +29,21 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                             />
 
                             <strong className="font-medium text-grey-800">{comment.user.username}</strong>
-                            {isCurrentUser && <span className="-ml-2 shrink-0 rounded-xs bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">you</span>}
+                            {isCurrentUser && (
+                                <span className="-ml-2 shrink-0 rounded-xs bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">
+                                    you
+                                </span>
+                            )}
                             <span>{comment.createdAt}</span>
                         </div>
-                        <CommentActions
-                            isCurrentUser={isCurrentUser}
-                        />
+                        <CommentActions isCurrentUser={isCurrentUser} isEditing={() => setIsEditing(!isEditing)} />
                     </div>
-                    <p className="wrap-break-word">{comment.content}</p>
+                    <CommentContent
+                        content={comment.content}
+                        isEditing={isEditing}
+                        commentId={comment.id}
+                        setIsEditing={setIsEditing}
+                    />
                 </div>
             </article>
             <div className="mt-6 ml-11.5 flex min-w-0 flex-col gap-6 border-l-2 border-grey-100 pl-10 empty:hidden">

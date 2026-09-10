@@ -12,6 +12,8 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
     const currentUser = data.currentUser;
 
     function addComment(content: string): void {
+        if (content.trim() === "") return;
+
         const newComment: Comment = {
             id: Date.now(),
             content: content,

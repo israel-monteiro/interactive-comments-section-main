@@ -4,9 +4,10 @@ import IconEdit from "/images/icon-edit.svg";
 
 interface CommentActionsProps {
     isCurrentUser: boolean;
+    isEditing: () => void;
 }
 
-export const CommentActions = ({ isCurrentUser }: CommentActionsProps) => {
+export const CommentActions = ({ isCurrentUser, isEditing }: CommentActionsProps) => {
     return (
         <>
             {isCurrentUser ? (
@@ -15,7 +16,7 @@ export const CommentActions = ({ isCurrentUser }: CommentActionsProps) => {
                         <img className="h-3.5 w-3 shrink-0" src={IconDelete} alt="" />
                         Delete
                     </button>
-                    <button className="flex items-center gap-2 font-medium text-purple-600">
+                    <button className="flex items-center gap-2 font-medium text-purple-600" onClick={isEditing}>
                         <img className="size-3.5 shrink-0" src={IconEdit} alt="" />
                         Edit
                     </button>
