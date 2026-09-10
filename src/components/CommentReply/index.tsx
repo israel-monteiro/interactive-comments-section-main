@@ -25,7 +25,7 @@ export const CommentReply = ({ reply }: CommentReplyProps) => {
                             alt={reply.user.username}
                         />
                         <strong className="font-medium text-grey-800">{reply.user.username}</strong>
-                        {isCurrentUser && <span className="-ml-2 shrink-0 rounded-[2px] bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">you</span>}
+                        {isCurrentUser && <span className="-ml-2 shrink-0 rounded-xs bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">you</span>}
                         <span>{reply.createdAt}</span>
                     </div>
                     <CommentActions
