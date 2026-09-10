@@ -1,13 +1,18 @@
+import { useContext } from "react";
+import { CommentContext } from "../../contexts/CommentContext";
 import type { Reply } from "../../interfaces/comment";
 import { VoteComment } from "../VoteComment";
-import IconReply from "/images/icon-reply.svg";
+import { CommentActions } from "../CommentActions";
 
 interface CommentReplyProps {
     reply: Reply;
 }
 
 export const CommentReply = ({ reply }: CommentReplyProps) => {
-    console.log(reply);
+    const { currentUser } = useContext(CommentContext);
+
+    const isCurrentUser = reply.user.username === currentUser.username;
+
     return (
         <article className="flex w-full items-start gap-6 rounded-lg bg-white p-6">
             <VoteComment id={reply.id} score={reply.score} />
@@ -20,14 +25,16 @@ export const CommentReply = ({ reply }: CommentReplyProps) => {
                             alt={reply.user.username}
                         />
                         <strong className="font-medium text-grey-800">{reply.user.username}</strong>
+                        {isCurrentUser && <span className="-ml-2 shrink-0 rounded-[2px] bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">you</span>}
                         <span>{reply.createdAt}</span>
                     </div>
-                    <button type="button" className="flex shrink-0 items-center gap-2 font-medium text-purple-600">
-                        <img className="h-[12.25px] w-3.5 shrink-0" src={IconReply} alt="" />
-                        Reply
-                    </button>
+                    <CommentActions
+                        isCurrentUser={isCurrentUser}
+                    />
                 </div>
-                <p className="wrap-break-word"><span className="font-medium text-purple-600">@{reply.replyingTo} </span>{reply.content}</p>
+                <p className="wrap-break-word">
+                    <span className="font-medium text-purple-600">@{reply.replyingTo} </span> {reply.content}
+                </p>
             </div>
         </article>
     );

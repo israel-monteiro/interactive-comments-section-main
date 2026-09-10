@@ -1,13 +1,18 @@
+import { useContext } from "react";
+import { CommentContext } from "../../contexts/CommentContext";
 import type { Comment } from "../../interfaces/comment";
 import { CommentReply } from "../CommentReply";
 import { VoteComment } from "../VoteComment";
-import IconReply from "/images/icon-reply.svg";
+import { CommentActions } from "../CommentActions";
 
 interface CommentCardProps {
     comment: Comment;
 }
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
+    const { currentUser } = useContext(CommentContext);
+
+    const isCurrentUser = comment.user.username === currentUser.username;
     return (
         <div className="comment-thread">
             <article className="flex w-full items-start gap-6 rounded-lg bg-white p-6">
@@ -20,13 +25,14 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                                 src={comment.user.image.png}
                                 alt={comment.user.username}
                             />
+
                             <strong className="font-medium text-grey-800">{comment.user.username}</strong>
+                            {isCurrentUser && <span className="-ml-2 shrink-0 rounded-[2px] bg-purple-600 px-[6.5px] py-[1.5px] text-[13px] leading-4 font-medium text-white">you</span>}
                             <span>{comment.createdAt}</span>
                         </div>
-                        <button type="button" className="flex items-center gap-2 font-medium text-purple-600">
-                            <img className="h-[12.25px] w-3.5 shrink-0" src={IconReply} alt="" />
-                            Reply
-                        </button>
+                        <CommentActions
+                            isCurrentUser={isCurrentUser}
+                        />
                     </div>
                     <p className="wrap-break-word">{comment.content}</p>
                 </div>
