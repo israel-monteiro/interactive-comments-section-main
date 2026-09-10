@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommentContext } from "./CommentContext";
 import data from "../data/data.json";
 import type { Comment, Reply } from "../interfaces/comment";
@@ -7,9 +7,19 @@ interface CommentProviderProps {
     children: React.ReactNode;
 }
 
+const localStorageKey = "@interactive-comments-section-main:comments";
+
 export const CommentProvider = ({ children }: CommentProviderProps) => {
-    const [comments, setComments] = useState<Comment[]>(data.comments);
+    const [comments, setComments] = useState<Comment[]>(() => {
+        const storedComments = localStorage.getItem(localStorageKey);
+
+        return storedComments ? JSON.parse(storedComments) : data.comments;
+    });
     const currentUser = data.currentUser;
+
+    useEffect(() => {
+        localStorage.setItem(localStorageKey, JSON.stringify(comments));
+    }, [comments]);
 
     function addComment(content: string): void {
         if (content.trim() === "") return;
@@ -27,8 +37,6 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
     }
 
     function addReply(CommentId: number, replyingTo: string, content: string): void {
-
-        
         const newReply: Reply = {
             id: Date.now(),
             content,
@@ -37,7 +45,7 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
             replyingTo,
             user: currentUser,
         };
-        
+
         setComments((prevComments) =>
             prevComments.map((comment) =>
                 comment.id === CommentId

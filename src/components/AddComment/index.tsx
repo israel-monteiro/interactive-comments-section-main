@@ -28,22 +28,23 @@ export const AddComment = ({ isReplying, commentId, replyingTo, setIsReplying }:
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex w-full max-w-182.5 items-start gap-4 rounded-lg bg-white p-6">
+        <form onSubmit={handleSubmit} className="grid w-full max-w-182.5 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-lg bg-white px-4 py-[14.5px] md:flex md:items-start md:p-6">
             <img
                 src={currentUser.image.png}
                 alt={currentUser.username}
-                className="size-10 shrink-0 rounded-full object-cover"
+                className="row-start-2 size-8 shrink-0 rounded-full object-cover md:size-10"
             />
             <textarea
+                aria-label="Add a comment"
                 placeholder="Add a comment..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="h-24 min-w-0 flex-1 resize-none rounded-lg border border-grey-100 bg-white px-4 py-2 text-grey-800 caret-purple-600 placeholder:text-grey-500 focus:border-purple-600 focus:outline-none"
+                className="col-span-2 row-start-1 h-24 w-full min-w-0 flex-1 resize-none rounded-lg border border-grey-100 bg-white px-4 py-2 text-grey-800 caret-purple-600 placeholder:text-grey-500 focus:border-purple-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-2"
             />
 
             <button
                 type="submit"
-                className="flex h-12 w-26 shrink-0 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white uppercase hover:bg-purple-200"
+                className="col-start-2 row-start-2 flex h-12 w-26 shrink-0 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white uppercase hover:bg-purple-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-600"
             >
                 {isReplying ? "Reply" : "Send"}
             </button>

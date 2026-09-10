@@ -21,11 +21,13 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
     const isCurrentUser = comment.user.username === currentUser.username;
     return (
         <div>
-            <article className="flex w-full items-start gap-6 rounded-lg bg-white p-6">
-                <VoteComment id={comment.id} score={comment.score} />
-                <div className="min-w-0 flex-1">
-                    <div className="mb-4 flex items-center justify-between">
-                        <div className="flex items-center gap-4">
+            <article className="grid w-full grid-cols-[auto_minmax(0,1fr)] items-start gap-x-4 gap-y-4 rounded-lg bg-white p-4 md:grid-cols-[40px_minmax(0,1fr)_auto] md:gap-x-6 md:px-6 md:py-[23.5px]">
+                <div className="col-start-1 row-start-3 self-center md:row-span-2 md:row-start-1 md:self-start">
+                    <VoteComment id={comment.id} score={comment.score} />
+                </div>
+                <div className="contents">
+                    <div className="contents">
+                        <div className="col-span-2 row-start-1 flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 md:col-span-1 md:col-start-2">
                             <img
                                 className="size-8 shrink-0 rounded-full object-cover"
                                 src={comment.user.image.png}
@@ -40,30 +42,36 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                             )}
                             <span>{comment.createdAt}</span>
                         </div>
-                        <CommentActions
-                            isCurrentUser={isCurrentUser}
-                            isEditing={() => setIsEditing(!isEditing)}
-                            isReplying={() => setIsReplying(!isReplying)}
-                            isDeleteModalOpen={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+                        <div className="col-start-2 row-start-3 self-center justify-self-end md:col-start-3 md:row-start-1">
+                            <CommentActions
+                                isCurrentUser={isCurrentUser}
+                                isEditing={() => setIsEditing(!isEditing)}
+                                isReplying={() => setIsReplying(!isReplying)}
+                                isDeleteModalOpen={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-2 row-start-2 min-w-0 md:col-start-2">
+                        <CommentContent
+                            content={comment.content}
+                            isEditing={isEditing}
+                            commentId={comment.id}
+                            setIsEditing={setIsEditing}
                         />
                     </div>
-                    <CommentContent
-                        content={comment.content}
-                        isEditing={isEditing}
-                        commentId={comment.id}
-                        setIsEditing={setIsEditing}
-                    />
                 </div>
             </article>
             {isReplying && (
-                <AddComment
-                    isReplying={isReplying}
-                    replyingTo={comment.user.username}
-                    commentId={comment.id}
-                    setIsReplying={setIsReplying}
-                />
+                <div className="mt-4 md:mt-6">
+                    <AddComment
+                        isReplying={isReplying}
+                        replyingTo={comment.user.username}
+                        commentId={comment.id}
+                        setIsReplying={setIsReplying}
+                    />
+                </div>
             )}
-            <div className="mt-6 ml-11.5 flex min-w-0 flex-col gap-6 border-l-2 border-grey-100 pl-10 empty:hidden">
+            <div className="mt-4 flex min-w-0 flex-col gap-4 border-l-2 border-grey-100 pl-4 empty:hidden md:mt-6 md:ml-11.5 md:gap-6 md:pl-10">
                 {comment.replies.map((reply) => (
                     <CommentReply key={reply.id} reply={reply} commentId={comment.id} />
                 ))}

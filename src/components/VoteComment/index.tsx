@@ -10,23 +10,23 @@ export const VoteComment = ({ id, score }: VoteCommentProps) => {
     const { increaseScore, reduceScore } = useContext(CommentContext);
 
     return (
-        <div className="flex h-25 w-10 shrink-0 flex-col items-center justify-center gap-4 rounded-[10px] bg-grey-50 text-purple-600">
+        <div className="flex h-10 w-25 shrink-0 items-center justify-center gap-1 md:h-25 md:w-10 md:flex-col md:gap-1 rounded-[10px] bg-grey-50 text-purple-600">
             <button
-                className="flex w-7.5 items-center justify-center hover:relative hover:[&>img]:opacity-0 hover:before:absolute hover:before:inset-0 hover:before:pointer-events-none hover:before:bg-purple-600 hover:before:mask-[url(/images/icon-plus.svg)] hover:before:mask-no-repeat hover:before:mask-center hover:before:mask-size-[11px_11px]"
+                className="group flex h-8 w-8 shrink-0 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-600"
                 type="button"
                 aria-label="Increase score"
                 onClick={() => increaseScore(id)}
             >
-                <img className="size-2.75" src="/images/icon-plus.svg" alt="" />
+                <img className="size-2.75 group-hover:opacity-50" src="/images/icon-plus.svg" alt="" />
             </button>
             <span className="w-7.5 text-center font-medium">{score}</span>
             <button
-                className="flex w-7.5 items-center justify-center hover:relative hover:[&>img]:opacity-0 hover:before:absolute hover:before:inset-0 hover:before:pointer-events-none hover:before:bg-purple-600 hover:before:mask-[url(/images/icon-minus.svg)] hover:before:mask-no-repeat hover:before:mask-center hover:before:mask-size-[11px_3px]"
+                className="group flex h-8 w-8 shrink-0 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-600"
                 type="button"
                 aria-label="Decrease score"
                 onClick={() => reduceScore(id)}
             >
-                <img className="h-0.75 w-2.75" src="/images/icon-minus.svg" alt="" />
+                <img className="h-0.75 w-2.75 group-hover:opacity-50" src="/images/icon-minus.svg" alt="" />
             </button>
         </div>
     );

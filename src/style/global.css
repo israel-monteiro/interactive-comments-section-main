@@ -27,12 +27,6 @@ body {
   @apply m-0 min-h-screen min-w-80 bg-grey-50 text-base font-normal leading-6 text-grey-500;
 }
 
-button,
-input,
-textarea {
-  font: inherit;
-}
-
 button {
   cursor: pointer;
 }
