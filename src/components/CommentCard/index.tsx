@@ -6,6 +6,7 @@ import { VoteComment } from "../VoteComment";
 import { CommentActions } from "../CommentActions";
 import { CommentContent } from "../CommentContent";
 import { AddComment } from "../AddComment";
+import { DeleteModal } from "../DeleteModal";
 
 interface CommentCardProps {
     comment: Comment;
@@ -15,6 +16,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
     const { currentUser } = useContext(CommentContext);
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const isCurrentUser = comment.user.username === currentUser.username;
     return (
@@ -42,6 +44,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                             isCurrentUser={isCurrentUser}
                             isEditing={() => setIsEditing(!isEditing)}
                             isReplying={() => setIsReplying(!isReplying)}
+                            isDeleteModalOpen={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
                         />
                     </div>
                     <CommentContent
@@ -65,6 +68,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                     <CommentReply key={reply.id} reply={reply} commentId={comment.id} />
                 ))}
             </div>
+            {isDeleteModalOpen && <DeleteModal onCancel={() => setIsDeleteModalOpen(!isDeleteModalOpen)} commentId={comment.id} />}
         </div>
     );
 };

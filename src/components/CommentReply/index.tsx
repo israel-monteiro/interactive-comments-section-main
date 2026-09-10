@@ -5,6 +5,7 @@ import { VoteComment } from "../VoteComment";
 import { CommentActions } from "../CommentActions";
 import { CommentContent } from "../CommentContent";
 import { AddComment } from "../AddComment";
+import { DeleteModal } from "../DeleteModal";
 
 interface CommentReplyProps {
     reply: Reply;
@@ -15,6 +16,7 @@ export const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
     const { currentUser } = useContext(CommentContext);
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const isCurrentUser = reply.user.username === currentUser.username;
 
@@ -42,6 +44,7 @@ export const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
                             isCurrentUser={isCurrentUser}
                             isEditing={() => setIsEditing(!isEditing)}
                             isReplying={() => setIsReplying(!isReplying)}
+                            isDeleteModalOpen={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
                         />
                     </div>
                     <CommentContent
@@ -60,6 +63,9 @@ export const CommentReply = ({ reply, commentId }: CommentReplyProps) => {
                     replyingTo={reply.user.username}
                     setIsReplying={setIsReplying}
                 />
+            )}
+            {isDeleteModalOpen && (
+                <DeleteModal onCancel={() => setIsDeleteModalOpen(!isDeleteModalOpen)} commentId={reply.id} />
             )}
         </>
     );

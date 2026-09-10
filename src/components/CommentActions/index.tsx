@@ -6,14 +6,15 @@ interface CommentActionsProps {
     isCurrentUser: boolean;
     isEditing: () => void;
     isReplying: () => void;
+    isDeleteModalOpen: () => void;
 }
 
-export const CommentActions = ({ isCurrentUser, isEditing, isReplying }: CommentActionsProps) => {
+export const CommentActions = ({ isCurrentUser, isEditing, isReplying, isDeleteModalOpen }: CommentActionsProps) => {
     return (
         <>
             {isCurrentUser ? (
                 <div className="flex shrink-0 items-center gap-6">
-                    <button className="flex items-center gap-2 font-medium text-pink-400">
+                    <button className="flex items-center gap-2 font-medium text-pink-400" onClick={isDeleteModalOpen}>
                         <img className="h-3.5 w-3 shrink-0" src={IconDelete} alt="" />
                         Delete
                     </button>
@@ -23,7 +24,11 @@ export const CommentActions = ({ isCurrentUser, isEditing, isReplying }: Comment
                     </button>
                 </div>
             ) : (
-                <button type="button" className="flex shrink-0 items-center gap-2 font-medium text-purple-600" onClick={isReplying}>
+                <button
+                    type="button"
+                    className="flex shrink-0 items-center gap-2 font-medium text-purple-600"
+                    onClick={isReplying}
+                >
                     <img className="h-[12.25px] w-3.5 shrink-0" src={IconReply} alt="" />
                     Reply
                 </button>
