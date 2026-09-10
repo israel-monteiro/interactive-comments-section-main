@@ -26,7 +26,9 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
         setComments((prevComments) => [...prevComments, newComment]);
     }
 
-    function addReply(parentCommentId: number, replyingTo: string, content: string): void {
+    function addReply(CommentId: number, replyingTo: string, content: string): void {
+
+        
         const newReply: Reply = {
             id: Date.now(),
             content,
@@ -35,10 +37,10 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
             replyingTo,
             user: currentUser,
         };
-
+        
         setComments((prevComments) =>
             prevComments.map((comment) =>
-                comment.id === parentCommentId
+                comment.id === CommentId
                     ? {
                           ...comment,
                           replies: [...comment.replies, newReply],

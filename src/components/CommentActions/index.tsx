@@ -5,9 +5,10 @@ import IconEdit from "/images/icon-edit.svg";
 interface CommentActionsProps {
     isCurrentUser: boolean;
     isEditing: () => void;
+    isReplying: () => void;
 }
 
-export const CommentActions = ({ isCurrentUser, isEditing }: CommentActionsProps) => {
+export const CommentActions = ({ isCurrentUser, isEditing, isReplying }: CommentActionsProps) => {
     return (
         <>
             {isCurrentUser ? (
@@ -22,7 +23,7 @@ export const CommentActions = ({ isCurrentUser, isEditing }: CommentActionsProps
                     </button>
                 </div>
             ) : (
-                <button type="button" className="flex shrink-0 items-center gap-2 font-medium text-purple-600">
+                <button type="button" className="flex shrink-0 items-center gap-2 font-medium text-purple-600" onClick={isReplying}>
                     <img className="h-[12.25px] w-3.5 shrink-0" src={IconReply} alt="" />
                     Reply
                 </button>

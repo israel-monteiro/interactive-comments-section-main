@@ -5,6 +5,7 @@ import { CommentReply } from "../CommentReply";
 import { VoteComment } from "../VoteComment";
 import { CommentActions } from "../CommentActions";
 import { CommentContent } from "../CommentContent";
+import { AddComment } from "../AddComment";
 
 interface CommentCardProps {
     comment: Comment;
@@ -13,6 +14,7 @@ interface CommentCardProps {
 export const CommentCard = ({ comment }: CommentCardProps) => {
     const { currentUser } = useContext(CommentContext);
     const [isEditing, setIsEditing] = useState(false);
+    const [isReplying, setIsReplying] = useState(false);
 
     const isCurrentUser = comment.user.username === currentUser.username;
     return (
@@ -36,7 +38,11 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                             )}
                             <span>{comment.createdAt}</span>
                         </div>
-                        <CommentActions isCurrentUser={isCurrentUser} isEditing={() => setIsEditing(!isEditing)} />
+                        <CommentActions
+                            isCurrentUser={isCurrentUser}
+                            isEditing={() => setIsEditing(!isEditing)}
+                            isReplying={() => setIsReplying(!isReplying)}
+                        />
                     </div>
                     <CommentContent
                         content={comment.content}
@@ -46,9 +52,17 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                     />
                 </div>
             </article>
+            {isReplying && (
+                <AddComment
+                    isReplying={isReplying}
+                    replyingTo={comment.user.username}
+                    commentId={comment.id}
+                    setIsReplying={setIsReplying}
+                />
+            )}
             <div className="mt-6 ml-11.5 flex min-w-0 flex-col gap-6 border-l-2 border-grey-100 pl-10 empty:hidden">
                 {comment.replies.map((reply) => (
-                    <CommentReply key={reply.id} reply={reply} />
+                    <CommentReply key={reply.id} reply={reply} commentId={comment.id} />
                 ))}
             </div>
         </div>
