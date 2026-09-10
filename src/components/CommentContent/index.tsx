@@ -24,7 +24,7 @@ export const CommentContent = ({ content, replyingTo, isEditing, commentId, setI
                     ></textarea>
                     <button
                         type="button"
-                        className="mt-4 ml-auto flex h-12 w-26 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white"
+                        className="mt-4 ml-auto flex h-12 w-26 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white hover:bg-purple-200"
                         onClick={() => {
                             updateComment(commentId, editedContent);
                             setIsEditing(false);

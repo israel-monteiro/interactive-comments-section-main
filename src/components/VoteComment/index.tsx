@@ -12,7 +12,7 @@ export const VoteComment = ({ id, score }: VoteCommentProps) => {
     return (
         <div className="flex h-25 w-10 shrink-0 flex-col items-center justify-center gap-4 rounded-[10px] bg-grey-50 text-purple-600">
             <button
-                className="flex w-7.5 items-center justify-center"
+                className="flex w-7.5 items-center justify-center hover:relative hover:[&>img]:opacity-0 hover:before:absolute hover:before:inset-0 hover:before:pointer-events-none hover:before:bg-purple-600 hover:before:mask-[url(/images/icon-plus.svg)] hover:before:mask-no-repeat hover:before:mask-center hover:before:mask-size-[11px_11px]"
                 type="button"
                 aria-label="Increase score"
                 onClick={() => increaseScore(id)}
@@ -21,7 +21,7 @@ export const VoteComment = ({ id, score }: VoteCommentProps) => {
             </button>
             <span className="w-7.5 text-center font-medium">{score}</span>
             <button
-                className="flex w-7.5 items-center justify-center"
+                className="flex w-7.5 items-center justify-center hover:relative hover:[&>img]:opacity-0 hover:before:absolute hover:before:inset-0 hover:before:pointer-events-none hover:before:bg-purple-600 hover:before:mask-[url(/images/icon-minus.svg)] hover:before:mask-no-repeat hover:before:mask-center hover:before:mask-size-[11px_3px]"
                 type="button"
                 aria-label="Decrease score"
                 onClick={() => reduceScore(id)}

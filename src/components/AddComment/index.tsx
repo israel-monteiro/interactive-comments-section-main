@@ -43,7 +43,7 @@ export const AddComment = ({ isReplying, commentId, replyingTo, setIsReplying }:
 
             <button
                 type="submit"
-                className="flex h-12 w-26 shrink-0 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white uppercase"
+                className="flex h-12 w-26 shrink-0 items-center justify-center rounded-lg bg-purple-600 py-3 font-medium text-white uppercase hover:bg-purple-200"
             >
                 {isReplying ? "Reply" : "Send"}
             </button>
