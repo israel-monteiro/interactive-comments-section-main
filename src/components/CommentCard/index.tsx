@@ -1,5 +1,5 @@
 import type { Comment } from "../../interfaces/comment";
-import { VoteControls } from "../VoteControls";
+import { VoteComment } from "../VoteComment";
 import IconReply from "/images/icon-reply.svg";
 
 interface CommentCardProps {
@@ -9,7 +9,7 @@ interface CommentCardProps {
 export const CommentCard = ({ comment }: CommentCardProps) => {
     return (
         <article className="flex w-full items-start gap-6 rounded-lg bg-white p-6">
-            <VoteControls comment={comment} />
+            <VoteComment comment={comment} />
             <div className="min-w-0 flex-1">
                 <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">

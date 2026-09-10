@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
 import type { Comment } from "../../interfaces/comment";
 
-interface VoteControlsProps {
+interface VoteCommentProps {
     comment: Comment;
 }
 
-export const VoteControls = ({ comment }: VoteControlsProps) => {
+export const VoteComment = ({ comment }: VoteCommentProps) => {
     const { increaseScore, reduceScore } = useContext(CommentContext);
 
     return (
