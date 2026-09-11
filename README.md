@@ -1,107 +1,183 @@
-﻿# Frontend Mentor - Interactive Comments Section Solution
+﻿# Interactive Comments Section
 
-This is my solution to the [Interactive Comments Section challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9).
-I implemented the provided design and interactions with React, TypeScript, Tailwind CSS, and Vite, including the optional browser persistence feature.
+A responsive and interactive comments application built with **React, TypeScript, Tailwind CSS, and Context API**.
 
-## Table of contents
+<p align="center">
+  <img src="./preview/preview-interactive-comments.gif" alt="Interactive Comments Section preview" width="100%" />
+</p>
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [How I built it](#how-i-built-it)
-  - [What I learned](#what-i-learned)
-- [Running locally](#running-locally)
-- [Author](#author)
+<p align="center">
+  <a href="https://interactive-comments-section-main-beryl.vercel.app/">Live Demo</a>
+  •
+  <a href="https://github.com/israel-monteiro/interactive-comments-section">Repository</a>
+  •
+  <a href="https://www.frontendmentor.io/solutions/interactive-comments-section-with-react-and-typescript-ypMc9Vqa9L">Frontend Mentor Solution</a>
+</p>
 
-## Overview
+## About
 
-### The challenge
+Interactive Comments Section is a front-end application that allows users to create, reply to, edit, delete, and vote on comments.
 
-Users should be able to:
+The project focuses on **state management, reusable components, nested data manipulation, TypeScript interfaces, and browser persistence**.
 
-- View comments and replies in a responsive layout for mobile and desktop.
-- Create comments and reply to other users' comments or replies.
-- Edit and delete their own comments and replies, with confirmation before deletion.
-- Upvote and downvote comments and replies, with scores staying at zero or above.
-- See hover and keyboard focus states on interactive controls.
+It was originally developed from a Frontend Mentor challenge and expanded as a practical React and TypeScript project.
 
-**Bonus implemented:** comments, replies, and scores persist after refreshing through `localStorage`.
+---
 
-The app uses the current user provided in the challenge's JSON data.
+## ✨ Features
 
-### Screenshot
+- Add new comments
+- Reply to comments and replies
+- Edit your own comments and replies
+- Delete comments and replies with confirmation
+- Upvote and downvote comments and replies
+- Prevent scores from going below zero
+- Nested replies
+- Current user identification
+- Persistent comments and scores with `localStorage`
+- Responsive mobile and desktop layouts
+- Keyboard focus states
+- Accessible delete confirmation dialog
 
-![Interactive Comments Section](./preview/preview-interactive-comments.gif)
+---
 
-### Links
+## 🛠️ Tech Stack
 
-- Solution URL: [View solution on Frontend Mentor](https://www.frontendmentor.io/solutions/interactive-comments-section-with-react-and-typescript-ypMc9Vqa9L)
-- Live Site URL: [View live project](https://interactive-comments-section-main-beryl.vercel.app/)
-- GitHub repository: [GitHub repository](https://github.com/israel-monteiro/interactive-comments-section-main)
+| Technology | Purpose |
+| --- | --- |
+| **React** | Component-based user interface |
+| **TypeScript** | Type safety and data modeling |
+| **Tailwind CSS** | Styling and responsive design |
+| **Context API** | Shared comments state and actions |
+| **localStorage** | Browser persistence |
+| **Vite** | Development and production build |
+| **ESLint** | Code quality and linting |
 
-## My process
+---
 
-### Built with
+## 🧠 Architecture
 
-- Semantic HTML5 markup
-- React and TypeScript
-- Vite
-- Tailwind CSS and CSS custom properties
-- Flexbox and CSS Grid
-- Mobile-first workflow
-- React Context API
-- `localStorage`
+The application separates the interface into reusable components for comments, replies, forms, voting controls, and user actions.
 
-### How I built it
+Shared comment data and update functions are managed by `CommentProvider` and exposed through `CommentContext`.
 
-I divided the interface into comment cards, replies, forms, voting controls, and a delete dialog. I reused `AddComment`, `CommentActions`, and `VoteComment` across comments and replies, with TypeScript interfaces defining the data and props each component needs.
+Local component state is used for interface-specific behavior such as opening edit forms, reply forms, and the delete confirmation dialog.
 
-I kept the shared comment data and update functions in `CommentProvider`, exposed through `CommentContext`. Form inputs and the visibility of edit forms, reply forms, and the delete dialog use local component state.
+This separation keeps shared application state centralized while UI-specific state remains close to the components that use it.
 
-I used immutable updates to add, edit, delete, and vote on comments and their nested replies. The provider reads saved comments from `localStorage` on initialization, falls back to the challenge's JSON data, and saves changes with `useEffect`.
+---
 
-I followed a mobile-first approach with Tailwind, combining CSS Grid for the comment layout and Flexbox for smaller groups of controls. The `md:` breakpoint rearranges voting controls, actions, and forms to match the desktop reference supplied by Frontend Mentor.
+## 🔄 State Management
 
-### What I learned
+Comments and replies are updated using immutable state operations.
 
-Reusing components helped me practice separating responsibilities and deciding which values to pass as props. Defining interfaces for comments, replies, and component props made those relationships clearer, especially because replies share comment fields but also need a `replyingTo` value.
+The application handles:
 
-I gained a better understanding of local versus shared state: opening one edit form belongs to that component, while updating its comment needs to reach the rest of the interface through Context. Working with nested replies also gave me practice combining `map`, `filter`, and spread syntax without changing the existing state directly.
+- Creating comments and replies
+- Updating existing content
+- Removing comments and nested replies
+- Increasing and decreasing scores
 
-For example, this update from `CommentProvider` removes a comment or a reply by ID while creating new arrays:
+Nested data is updated using methods such as `map`, `filter`, and spread syntax without directly mutating the existing state.
 
-```tsx
-setComments((prevComments) =>
-    prevComments
-        .filter((comment) => comment.id !== commentId)
-        .map((comment) => ({
-            ...comment,
-            replies: comment.replies.filter((reply) => reply.id !== commentId),
-        })),
-);
+The application initializes comments from `localStorage` when available and falls back to the original JSON data.
+
+Changes are automatically persisted using `useEffect`.
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── assets/
+├── components/
+├── contexts/
+├── data/
+├── interfaces/
+├── App.tsx
+└── main.tsx
 ```
 
-Connecting state to `localStorage` helped me understand how initialization and effects work together to preserve changes after a refresh. Recreating the mobile and desktop layouts gave me more practice with responsive positioning, spacing, and Tailwind breakpoints.
+The project follows a component-based structure to keep responsibilities separated and make the interface easier to maintain.
 
-I also practiced basic accessibility through semantic elements, accessible labels, visible keyboard focus, and a native `<dialog>` with Escape-to-close support for delete confirmation.
+---
 
-## Running locally
+## 📚 What I Learned
 
-With Node.js and npm installed, run:
+This project helped me improve my understanding of:
+
+- React component composition
+- TypeScript interfaces
+- Context API
+- Local vs. shared state
+- Immutable state updates
+- Nested arrays and objects
+- `map` and `filter`
+- `localStorage`
+- `useEffect`
+- Reusable components
+- Responsive layouts with Tailwind CSS
+- Basic accessibility
+
+One of the main challenges was managing comments and nested replies while keeping state updates immutable.
+
+It also helped me understand when state should remain local to a component and when it should be shared through Context.
+
+---
+
+## 🚀 Running Locally
+
+Clone the repository:
 
 ```bash
-git clone https://github.com/israel-monteiro/interactive-comments-section-main.git
-cd interactive-comments-section-main
+git clone https://github.com/israel-monteiro/interactive-comments-section.git
+```
+
+Enter the project directory:
+
+```bash
+cd interactive-comments-section
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Open the local URL printed in the terminal. Use `npm run build` to run TypeScript checks and generate the production build, or `npm run lint` to check the code with ESLint.
+Create a production build:
 
-## Author
+```bash
+npm run build
+```
 
-- Israel Monteiro
-- GitHub: [@israel-monteiro](https://github.com/israel-monteiro)
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+---
+
+## 🎯 Challenge
+
+This project is based on the
+[Interactive Comments Section challenge](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9L)
+from Frontend Mentor.
+
+The original design assets and requirements were provided by Frontend Mentor, while the application architecture and implementation were developed as part of my front-end learning process.
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Israel Monteiro**.
+
+[GitHub](https://github.com/israel-monteiro)
